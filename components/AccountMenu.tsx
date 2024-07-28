@@ -6,7 +6,7 @@ interface AccountMenuProps {
   visible?: boolean;
 }
 const AccountMenu: FC<AccountMenuProps> = ({ visible }) => {
-  const { data } = useCurrentUser;
+  const { data } = useCurrentUser();
 
   if (!visible) return null;
   return (
