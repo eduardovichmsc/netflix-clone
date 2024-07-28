@@ -1,11 +1,17 @@
 import { FC } from "react";
 import { BsPlay, BsPlayFill } from "react-icons/bs";
+import FavoriteButton from "./FavoriteButton";
+import { useRouter } from "next/router";
+import useInfoModal from "@/hooks/useInfoModal";
+import { BiChevronDown } from "react-icons/bi";
 
 interface MovieCardProps {
   data: Record<string, any>;
 }
 
 const MovieCard: FC<MovieCardProps> = ({ data }) => {
+  const router = useRouter();
+  const { openModal } = useInfoModal();
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -25,9 +31,16 @@ const MovieCard: FC<MovieCardProps> = ({ data }) => {
           <div className="flex flex-row items-center gap-3">
             <div
               className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
-              onClick={() => {}}
+              onClick={() => router.push(`/watch/${data.id}`)}
             >
               <BsPlayFill size={30} className="w-4 lg:w-10" />
+            </div>
+            <FavoriteButton movieId={data?.id} />
+            <div className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
+              <BiChevronDown
+                className="text-white"
+                onClick={() => openModal(data?.id)}
+              />
             </div>
           </div>
 
